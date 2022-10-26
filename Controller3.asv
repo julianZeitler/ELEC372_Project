@@ -26,22 +26,6 @@ syscl3;
 
 s = stepinfo(y,t);
 
-% settling time = 144.4260s
-% overshoot = 22.9565%
+% settling time = 144.4260
+% overshoot = 22.9565
 % steady-state-error = 0%
-
-
-numStep = 5;
-%denStep = [1 0];
-sysStep = tf(numStep);
-
-syscl3 = series(sysStep, syscl3);
-
-t = 0:0.5:500;
-y = step(syscl3,t);
-plot(t,y), grid;
-xlabel('Time (s)');
-ylabel('Output Y(t)');
-title('Example1: Closed-Loop Step Response.');
-zcl = zero(syscl3);
-pcl = pole(syscl3);
