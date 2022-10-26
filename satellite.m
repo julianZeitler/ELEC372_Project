@@ -61,6 +61,7 @@ classdef satellite < handle
         end
 
         function plot_result(obj)
+            figure;
             plot(obj.t,obj.y), grid;
             xlabel('Time (s)');
             ylabel('Output Y(t)');
