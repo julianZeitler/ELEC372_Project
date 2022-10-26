@@ -1,47 +1,14 @@
-% Controller#3
+classdef Controller3 < satellite
+    properties
+        
+    end
 
-numK3= 35*[40 1];
-denK3= 40*[1 2];
-sysK3= tf(numK3, denK3);
-
-%G 
-numG = 1;
-denG = [400 0 0];
-sysG = tf(numG, denG);
-
-% DS1 is stable
-
-sysfo3 = series(sysK3, sysG);
-syscl3 = feedback(sysfo3, 1);
-
-t = 0:0.5:500;
-y = step(syscl3, t);
-plot(t,y), grid;
-xlabel('Time (s)');
-ylabel('Output Y(t)');
-title('Example1: Closed-Loop Step Response.');
-zcl = zero(syscl3);
-pcl = pole(syscl3);
-syscl3;
-
-s = stepinfo(y,t);
-
-% settling time = 144.4260s
-% overshoot = 22.9565%
-% steady-state-error = 0%
-
-
-numStep = 5;
-%denStep = [1 0];
-sysStep = tf(numStep);
-
-syscl3 = series(sysStep, syscl3);
-
-t = 0:0.5:500;
-y = step(syscl3,t);
-plot(t,y), grid;
-xlabel('Time (s)');
-ylabel('Output Y(t)');
-title('Example1: Closed-Loop Step Response.');
-zcl = zero(syscl3);
-pcl = pole(syscl3);
+    methods
+        function obj = Controller3()
+            obj@satellite();
+            obj.numK = 35*[40 1];
+            obj.denK = 40*[1 2];
+            obj.sysK = tf(obj.numK, obj.denK);
+        end
+    end
+end
