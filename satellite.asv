@@ -9,7 +9,6 @@ classdef satellite < handle
         denG;
         sysG;
 
-        % K
         numK;
         denK;
         sysK;
@@ -28,28 +27,22 @@ classdef satellite < handle
         %calculation for output_Tc
         sysctlTc;
 
-        % Transfer function for Tc/Td
         sysctlTCTD;
 
-        % Zeros and Poles of sysctl
         zcl;
         pcl;
 
-        % Properties for step input
         numStep;
         sysStep;
 
-        % Properties of step response
         settling_time;
         overshoot;
         steady_state_error;
 
-        % Time vectors for plotting
         t_step;
         t_dist;
         t_output_Tc;
 
-        % Output signals of simulations
         output_y_step;
         output_y_dist;
         output_Tc;
@@ -58,20 +51,17 @@ classdef satellite < handle
     
     methods
         function obj = satellite(~)
-            % Calculate Transfer function for G
             obj.numG = 1;
             obj.denG = [400 0 0];
             obj.sysG = tf(obj.numG, obj.denG);
 
-            % Calculate disturbance input
             obj.omega = 7.28E-5;
 
             obj.numDist = [10^-4 0];
             obj.denDist = [1 0 (obj.omega)^2];
             obj.sysDist = tf(obj.numDist, obj.denDist);
 
-            % Used to simulate different amplitudes for step inputs
-            obj.numStep = 5;
+            obj.numStep = 1;
             obj.sysStep = tf(obj.numStep);
         end
         
@@ -171,6 +161,32 @@ classdef satellite < handle
             ylabel('Signal Tc(t)');
             grid on;
             title(sprintf("Tc for cosin disturbance input of Controller %d",obj.ControllerNum));
+        end
+
+        function print_result(obj)
+            disp('Transfer function sysctl');
+            obj.sysctl
+
+            disp('Transfer function sysctl_dist');
+            obj.calc_sysctl_dist
+
+            disp('Transfer function sysctl_tc');
+            obj.calc_sysctl_tc
+
+            disp('Transfer function sysctl');
+            obj.sysctl
+
+            disp('The poles are');
+            obj.pcl
+
+            disp('settling time');
+            disp(obj.settling_time);
+
+            disp('overshoot');
+            disp(obj.overshoot);
+
+            disp('steady-state-error');
+            disp(obj.steady_state_error);
         end
     end
 end
