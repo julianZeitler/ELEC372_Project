@@ -43,6 +43,7 @@ classdef satellite < handle
         settling_time;
         overshoot;
         steady_state_error;
+        steady_state_error_dist;
 
         % Time vectors for plotting
         t_step;
@@ -71,7 +72,7 @@ classdef satellite < handle
             obj.sysDist = tf(obj.numDist, obj.denDist);
 
             % Used to simulate different amplitudes for step inputs
-            obj.numStep = 5;
+            obj.numStep = 1;
             obj.sysStep = tf(obj.numStep);
         end
         
@@ -116,6 +117,7 @@ classdef satellite < handle
 
             % disturbance input
             obj.output_y_dist = step(obj.sysctlDist, obj.t_step);
+            obj.steady_state_error_dist = (obj.numStep - obj.output_y_dist(end))*100;
 
             obj.output_Tc_Integrated = cumtrapz(obj.t_output_Tc, abs(step(obj.sysctlTc, obj.t_output_Tc)));
             obj.output_Tc = step(obj.sysctlTc, obj.t_output_Tc);
