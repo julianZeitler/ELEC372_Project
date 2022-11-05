@@ -163,7 +163,9 @@ classdef satellite < handle
             xlabel('Time (s)');
             ylabel('Integral of Tc(t)');
             grid on;
+
             title(sprintf("Integrated Tc for disturbance step Input of Controller %d",obj.ControllerNum));
+            title(sprintf("Integrated Tc for step Input of Controller %d",obj.ControllerNum));
 
             % Tc for sinus disturbance input
             figure;
