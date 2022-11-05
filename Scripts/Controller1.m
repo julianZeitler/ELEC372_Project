@@ -17,12 +17,12 @@ zcl = zero(syscl1);
 pcl = pole(syscl1);
 
 % the poles are
-%   -0.2175 + 0.0000i
-%   -0.0163 + 0.0129i
-%   -0.0163 - 0.0129i
+%     0.0132 + 0.0278i
+%     0.0132 - 0.0278i
+%     -0.0264 + 0.0000i
 
 % the zero is
-%    -0.0125
+%    -0.1000
 
 %DS 2
 t = 0:0.5:500;
@@ -42,6 +42,7 @@ settling_time = s.SettlingTime;
 overshoot = s.Overshoot;
 
 % DS 4
+steady_state_error_step = (1 - y(end))*100;
 sysctlDist = feedback(sysG, -sysK1, 1);
 y = step(sysctlDist, t);
 steady_state_error = (1 - y(end))*100;

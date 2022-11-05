@@ -18,12 +18,12 @@ zcl = zero(syscl3);
 pcl = pole(syscl3);
 
 % the poles are
-%   -0.2175 + 0.0000i
-%   -0.0163 + 0.0129i
-%   -0.0163 - 0.0129i
+%     -1.9558 + 0.0000i
+%     -0.0221 + 0.0251i
+%     -0.0221 - 0.0251i
 
 % the zero is
-%    -0.0125
+%    -0.0250
 
 %DS 2
 t = 0:0.5:500;
@@ -36,19 +36,20 @@ xlabel('Time (s)');
 ylabel('Output Y(t)');
 title('DS1: Closed-Loop Step Response of Controller 3');
 
-% settling time = 247.2102s
+% settling time = 144.4260s
 settling_time = s.SettlingTime;
 %DS 3
-% overshoot = 21.2206%
+% overshoot = 22.9565%
 overshoot = s.Overshoot;
 
 % DS 4
+steady_state_error_step = (1 - y(end))*100;
 sysctlDist = feedback(sysG, -sysK3, 1);
 y = step(sysctlDist, t);
-steady_state_error = (1 - y(end))*100;
+steady_state_error_dist = (1 - y(end))*100;
 
-% steady-state-error = 0.0003 = 0.03% // normal step input
-% steady-state-error = -5.664281911155742e+02 // Disturbance step input
+% steady-state-error = 0.0017% // normal step input
+% steady-state-error = -128.5678 // Disturbance step input
 
 figure;
 plot(t,y), grid;
@@ -60,7 +61,7 @@ title('DS2-4: Disturbance Step Input of Controller 3');
 sysctlTc = feedback(sysK3, sysG);
 output_Tc_Integrated = cumtrapz(t, abs(step(sysctlTc, t)));
 
-% power_consumption = 23.0659
+% power_consumption = 38.6800
 power_consumption = output_Tc_Integrated(end);
 
 figure;

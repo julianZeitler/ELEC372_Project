@@ -43,6 +43,7 @@ settling_time = s.SettlingTime;
 overshoot = s.Overshoot;
 
 % DS 4
+steady_state_error_step = (1 - y(end))*100;
 sysctlDist = feedback(sysG, -sysK2, 1);
 y = step(sysctlDist, t);
 steady_state_error = (1 - y(end))*100;
